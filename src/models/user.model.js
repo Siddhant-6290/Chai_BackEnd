@@ -9,8 +9,8 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       lowercase: true,
-      trim: true,
-      index: true,
+      trim: true, //removes extra spaces from the beginning and end of a string before saving to DB.
+      index: true, //Creates a database index on that field., query executes much faster
     },
     email: {
       type: String,
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
     ],
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: [true, "Password is required"], //default error msg overwrite
     },
     refreshToken: {
       type: String,
@@ -55,7 +55,7 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-//custom method
+//custom method -> never use a arrow fn (no access of this)
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
