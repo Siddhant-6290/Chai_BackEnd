@@ -1,6 +1,6 @@
 import { response } from "express";
 
-//using promises
+//using promises -> next is sent with error and express handles it
 const asyncHandler = (requestHandler) => {
   return (req, res, next) => {
     Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err));
